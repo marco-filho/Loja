@@ -22,13 +22,10 @@ namespace Loja.Domain.Services
 
         public override async Task<Order> Add(Order model)
         {
-            var entity = await _orderRepository.Create(model);
+            model.OrderedAt = DateTime.UtcNow;
+            model.Total = model.OrderItems.Sum(x => x.Amount * x.Price);
 
-            foreach (var item in entity.OrderItems)
-            {
-                item.OrderId = entity.Id;
-                await _orderItemService.Add(item);
-            }
+            var entity = await _orderRepository.Create(model);
 
             return entity;
         }
@@ -38,6 +35,7 @@ namespace Loja.Domain.Services
             var entity = await Get(model.Id);
 
             entity.ClientName = model.ClientName;
+            entity.Total = model.OrderItems.Sum(x => x.Amount * x.Price);
 
             var deletedItems = entity.OrderItems
                 .ExceptBy(model.OrderItems.Select(x => x.Id), x => x.Id);
@@ -45,7 +43,10 @@ namespace Loja.Domain.Services
             foreach (var item in model.OrderItems)
             {
                 if (item.Id == default)
+                {
+                    item.OrderId = model.Id;
                     await _orderItemService.Add(item);
+                }
                 else
                 {
                     var orderItem = await _orderItemService.Get(item.Id);

@@ -8,7 +8,7 @@
 
         public DateTime OrderedAt { get; set; }
 
-        public decimal Total => Items.Sum(o => o.Price * o.Amount);
+        public decimal Total { get; set; }
 
         public ICollection<OrderItemDto> Items { get; set; }
     }

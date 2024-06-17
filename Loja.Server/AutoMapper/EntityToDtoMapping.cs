@@ -9,7 +9,6 @@ namespace Loja.Server.AutoMapper
         public EntityToDtoMapping()
         {
             CreateMap<Order, OrderDto>()
-                .IgnoreAllPropertiesWithAnInaccessibleSetter()
                 .ForMember(x => x.Items, opt => opt.MapFrom(x => x.OrderItems));
             CreateMap<OrderItem, OrderItemDto>();
         }

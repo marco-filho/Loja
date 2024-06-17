@@ -9,14 +9,7 @@ namespace Loja.Server.AutoMapper
         public DtoToEntityMapping()
         {
             CreateMap<OrderDto, Order>()
-                .IgnoreAllPropertiesWithAnInaccessibleSetter()
-                .ForMember(x => x.OrderItems, opt => opt.MapFrom(x => x.Items))
-                .AfterMap((src, dest) =>
-                    dest.OrderItems.Select(x =>
-                    {
-                        x.OrderId = src.Id;
-                        return x;
-                    }));
+                .ForMember(x => x.OrderItems, opt => opt.MapFrom(x => x.Items));
             CreateMap<OrderItemDto, OrderItem>();
         }
     }

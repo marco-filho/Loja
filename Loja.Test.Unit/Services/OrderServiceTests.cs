@@ -36,14 +36,12 @@ namespace Loja.Test.Unit.Services
             };
 
             _orderRepository.Setup(x => x.Create(It.IsAny<Order>())).ReturnsAsync(order);
-            _orderItemService.Setup(x => x.Add(It.IsAny<OrderItem>()));
 
             // Act
             await _orderService.Add(order);
 
             // Assert
             _orderRepository.Verify(x => x.Create(It.IsAny<Order>()), Times.Once());
-            _orderItemService.Verify(x => x.Add(It.IsAny<OrderItem>()), Times.Exactly(2));
         }
 
         [Fact]

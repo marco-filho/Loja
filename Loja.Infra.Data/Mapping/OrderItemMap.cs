@@ -6,7 +6,7 @@ namespace Loja.Infra.Data.Mapping
 {
     public class OrderItemMap : BaseMap<OrderItem>
     {
-        private const string tableName = "ItemPedido";
+        private const string tableName = "OrderItem";
 
         public override void MapEntity(EntityTypeBuilder<OrderItem> builder)
         {

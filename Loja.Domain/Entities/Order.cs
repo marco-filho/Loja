@@ -15,7 +15,7 @@
         /// <summary>
         /// Valor total do pedido.
         /// </summary>
-        public decimal Total => OrderItems.Sum(o => o.Price * o.Amount);
+        public decimal Total { get; set; }
 
         #region Navigation
 

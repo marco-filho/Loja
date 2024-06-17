@@ -1,6 +1,7 @@
 ﻿using Loja.Domain.Entities;
 using Loja.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace Loja.Infra.Data.Repositories
 {
@@ -10,10 +11,20 @@ namespace Loja.Infra.Data.Repositories
 
         public override async Task<Order> Read(int id)
         {
-            return await _context
+            var entity = await _context
                 .Set<Order>()
-                .Include(x => x.OrderItems)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .IgnoreDeleted()
+                .SingleAsync(x => x.Id == id);
+
+            await _context.Entry(entity)
+                .Collection(b => b.OrderItems)
+                .Query()
+                .Where(x => x.DeletedAt == null)
+                .LoadAsync();
+
+            _context.Entry(entity).State = EntityState.Detached;
+
+            return entity;
         }
     }
 }
