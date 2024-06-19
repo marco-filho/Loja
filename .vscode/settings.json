@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 500,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:Loja}/Loja.Server/Loja.Development.db",
+            "name": "Loja Dev"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
