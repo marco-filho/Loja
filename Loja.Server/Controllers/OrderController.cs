@@ -88,6 +88,7 @@ namespace Loja.Server.Controllers
         ///     PUT /order OU /pedidos
         ///     
         ///</remarks>
+        ///<param name="id">Id do pedido para atualizar</param>
         ///<param name="dto">Dados para atualização do pedido</param>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

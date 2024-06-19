@@ -37,6 +37,8 @@ namespace Loja.Domain.Services
             entity.ClientName = model.ClientName;
             entity.Total = model.OrderItems.Sum(x => x.Amount * x.Price);
 
+            await _orderRepository.Update(entity);
+
             var deletedItems = entity.OrderItems
                 .ExceptBy(model.OrderItems.Select(x => x.Id), x => x.Id);
 
